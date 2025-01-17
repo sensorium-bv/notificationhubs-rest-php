@@ -2,9 +2,11 @@
 
 namespace Openpp\NotificationHubsRest\Registration\Tests;
 
+use http\Exception\RuntimeException;
 use Openpp\NotificationHubsRest\Registration\WindowsRegistration;
+use PHPUnit\Framework\TestCase;
 
-class WindowsRegistrationTest extends \PHPUnit_Framework_TestCase
+class WindowsRegistrationTest extends TestCase
 {
     public function testRegistration()
     {
@@ -186,6 +188,8 @@ XML;
      */
     public function testNoToken()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new WindowsRegistration();
         $registration->getPayload();
     }
@@ -269,58 +273,6 @@ RESPONSE;
                 'RegistrationId' => '2372532420827572008-85883004107185159-4',
                 'Tags' => 'ios, female, japanese',
                 'ChannelUri' => 'http://channel.uri/endpoint',
-            ],
-            $result
-        );
-    }
-
-    public function testScrapeTemplateRegistrationResponse()
-    {
-        self::markTestSkipped('Not yet ready');
-
-        $registration = new WindowsRegistration();
-        $registration->setToken('http://channel.uri/endpoint')
-                     ->setTags(['ios', 'female', 'japanese'])
-                     ->setTemplate('{ "aps": { "alert": "$(message)"} }')
-                     ->setWnsType('wns/tile')
-                     ->setWnsTag('myTag');
-
-        $response = <<<'RESPONSE'
-<entry xmlns="http://www.w3.org/2005/Atom">
-    <content type="application/xml">
-        <WindowsTemplateRegistrationDescription xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/netservices/2010/10/servicebus/connect">
-            <ETag>3</ETag>
-            <ExpirationTime>2014-09-01T15:57:46.778Z</ExpirationTime>
-            <RegistrationId>2372532420827572008-85883004107185159-4</RegistrationId>
-            <Tags>ios, female, japanese</Tags>
-            <ChannelUri>http://channel.uri/endpoint</ChannelUri>
-            <BodyTemplate><![CDATA[{ "aps": { "alert": "$(message)"} }]]></BodyTemplate>
-            <WnsHeaders>
-                <WnsHeader>
-                    <Header>X-WNS-Type</Header>
-                    <Value>wns/tile</Value>
-                </WnsHeader>
-                <WnsHeader>
-                    <Header>X-WNS-Tag</Header>
-                    <Value>myTag</Value>
-                </WnsHeader>
-            </WnsHeaders>
-            <Expiry>3000</Expiry>
-        </WindowsTemplateRegistrationDescription>
-    </content>
-</entry>
-RESPONSE;
-
-        $result = $registration->scrapeResponse($response);
-        $this->assertEquals(
-            [
-                'ETag' => '3',
-                'ExpirationTime' => '2014-09-01T15:57:46.778Z',
-                'RegistrationId' => '2372532420827572008-85883004107185159-4',
-                'Tags' => 'ios, female, japanese',
-                'ChannelUri' => 'http://channel.uri/endpoint',
-                'BodyTemplate' => '{ "aps": { "alert": "$(message)"} }',
-                'Expiry' => '3000',
             ],
             $result
         );

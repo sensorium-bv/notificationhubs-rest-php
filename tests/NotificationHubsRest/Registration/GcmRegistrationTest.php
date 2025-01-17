@@ -3,8 +3,9 @@
 namespace Openpp\NotificationHubsRest\Registration\Tests;
 
 use Openpp\NotificationHubsRest\Registration\GcmRegistration;
+use PHPUnit\Framework\TestCase;
 
-class GcmRegistrationTest extends \PHPUnit_Framework_TestCase
+class GcmRegistrationTest extends TestCase
 {
     public function testRegistration()
     {
@@ -151,6 +152,8 @@ XML;
      */
     public function testNoToken()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $payload = $registration->getPayload();
     }
@@ -272,6 +275,8 @@ RESPONSE;
      */
     public function testScrapeRegistrationResponseWithInvalidDescription()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                      ->setTags(['android', 'male', 'japanese']);

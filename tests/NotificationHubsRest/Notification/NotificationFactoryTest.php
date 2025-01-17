@@ -6,12 +6,13 @@ use Openpp\NotificationHubsRest\Notification\AppleNotification;
 use Openpp\NotificationHubsRest\Notification\GcmNotification;
 use Openpp\NotificationHubsRest\Notification\NotificationFactory;
 use Openpp\NotificationHubsRest\Notification\TemplateNotification;
+use PHPUnit\Framework\TestCase;
 
-class NotificationFactoryTest extends \PHPUnit_Framework_TestCase
+class NotificationFactoryTest extends TestCase
 {
     protected $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = new NotificationFactory();
         parent::setUp();
@@ -40,6 +41,8 @@ class NotificationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidNotification()
     {
+        $this->expectException(\RuntimeException::class);
+
         $this->factory->createNotification('windows', 'Hello!');
     }
 }

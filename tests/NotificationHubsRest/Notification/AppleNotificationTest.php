@@ -3,8 +3,9 @@
 namespace Openpp\NotificationHubsRest\Notification\Tests;
 
 use Openpp\NotificationHubsRest\Notification\AppleNotification;
+use PHPUnit\Framework\TestCase;
 
-class AppleNotificationTest extends \PHPUnit_Framework_TestCase
+class AppleNotificationTest extends TestCase
 {
     public function testGetContentType()
     {
@@ -217,6 +218,8 @@ JSON;
      */
     public function testGetPayloadWithInvalidAlert()
     {
+        $this->expectException(\RuntimeException::class);
+
         $notification = new AppleNotification(new \stdClass());
         $payload = $notification->getPayload();
     }

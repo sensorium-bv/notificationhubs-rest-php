@@ -6,12 +6,13 @@ use Openpp\NotificationHubsRest\Registration\AppleRegistration;
 use Openpp\NotificationHubsRest\Registration\GcmRegistration;
 use Openpp\NotificationHubsRest\Registration\RegistrationFactory;
 use Openpp\NotificationHubsRest\Registration\WindowsRegistration;
+use PHPUnit\Framework\TestCase;
 
-class RegistrationFactoryTest extends \PHPUnit_Framework_TestCase
+class RegistrationFactoryTest extends TestCase
 {
     protected $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = new RegistrationFactory();
         parent::setUp();
@@ -40,6 +41,8 @@ class RegistrationFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateInvalidRegistration()
     {
+        $this->expectException(\RuntimeException::class);
+
         $this->factory->createRegistration('baidu');
     }
 }

@@ -3,8 +3,9 @@
 namespace Openpp\NotificationHubsRest\Notification\Tests;
 
 use Openpp\NotificationHubsRest\Notification\GcmNotification;
+use PHPUnit\Framework\TestCase;
 
-class GcmNotificationTest extends \PHPUnit_Framework_TestCase
+class GcmNotificationTest extends TestCase
 {
     public function testGetContentType()
     {
@@ -184,6 +185,8 @@ JSON;
      */
     public function testGetPayloadWithInvalidAlert()
     {
+        $this->expectException(\RuntimeException::class);
+
         $notification = new GcmNotification(new \stdClass());
         $payload = $notification->getPayload();
     }

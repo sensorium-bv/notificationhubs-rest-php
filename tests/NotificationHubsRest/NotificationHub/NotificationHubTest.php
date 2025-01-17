@@ -5,18 +5,19 @@ namespace Openpp\NotificationHubsRest\NotificationHub\Tests;
 use Openpp\NotificationHubsRest\Notification\GcmNotification;
 use Openpp\NotificationHubsRest\NotificationHub\NotificationHub;
 use Openpp\NotificationHubsRest\Registration\GcmRegistration;
+use PHPUnit\Framework\TestCase;
 
-class NotificationHubTest extends \PHPUnit_Framework_TestCase
+class NotificationHubTest extends TestCase
 {
     const CONNECTION_STRING = 'Endpoint=sb://buildhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=bHIqy5zmG3OrsMWC6Iy/9bXJOSuTFW2uk7H21S6ipow=';
     protected $mock;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->mock = $this->getMockBuilder('Openpp\NotificationHubsRest\NotificationHub\NotificationHub')
                      ->setConstructorArgs([self::CONNECTION_STRING, 'myHub'])
-                     ->setMethods(['request'])
+                     ->onlyMethods(['request'])
                      ->getMock();
     }
 
@@ -25,6 +26,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidPartsConnectionString()
     {
+        $this->expectException(\RuntimeException::class);
+
         new NotificationHub('abcde;fghijk', 'myHub');
     }
 
@@ -33,6 +36,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoEndpointConnectionString()
     {
+        $this->expectException(\RuntimeException::class);
+
         new NotificationHub('SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=bHIqy5zmG3OrsMWC6Iy/9bXJOSuTFW2uk7H21S6ipow=', 'myHub');
     }
 
@@ -49,6 +54,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testNoSharedAccessKeyConnectionString()
     {
+        $this->expectException(\RuntimeException::class);
+
         new NotificationHub('Endpoint=sb://buildhub-ns.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;', 'myHub');
     }
 
@@ -135,6 +142,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateRegistrationWithRegistrationId()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                      ->setRegistrationId('2372532420827572008-85883004107185159-4');
@@ -147,6 +156,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateRegistrationWithEtag()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                      ->setEtag('3');
@@ -210,6 +221,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testUpdateRegistrationWithNoRegistrationId()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                      ->setEtag('3');
@@ -254,6 +267,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteRegistrationWithNoRegistrationId()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                       ->setEtag('3');
@@ -266,6 +281,8 @@ class NotificationHubTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteRegistrationWithEtag()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new GcmRegistration();
         $registration->setToken('abcdefghijklmnopqrstuvwxyz')
                      ->setRegistrationId('2372532420827572008-85883004107185159-4');

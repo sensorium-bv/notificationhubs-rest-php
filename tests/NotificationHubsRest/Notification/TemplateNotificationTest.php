@@ -3,8 +3,9 @@
 namespace Openpp\NotificationHubsRest\Notification\Tests;
 
 use Openpp\NotificationHubsRest\Notification\TemplateNotification;
+use PHPUnit\Framework\TestCase;
 
-class TemplateNotificationTest extends \PHPUnit_Framework_TestCase
+class TemplateNotificationTest extends TestCase
 {
     public function testGetContentType()
     {

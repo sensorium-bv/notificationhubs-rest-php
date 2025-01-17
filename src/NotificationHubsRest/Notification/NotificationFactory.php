@@ -17,7 +17,7 @@ class NotificationFactory
      *
      * @return NotificationInterface
      */
-    public function createNotification($format, $alert, array $options = [], $tagsOrTagExpression = '', \DateTime $scheduleTime = null)
+    public function createNotification($format, $alert, array $options = [], $tagsOrTagExpression = '', ?\DateTime $scheduleTime = null)
     {
         $class = __NAMESPACE__.'\\'.ucfirst($format).'Notification';
 

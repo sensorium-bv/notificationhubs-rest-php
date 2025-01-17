@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit beStrictAboutTestsThatDoNotTestAnything="true"
-         checkForUnintentionallyCoveredCode="true"
-         bootstrap="tests/bootstrap.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         backupGlobals="false"
          colors="true"
->
+         processIsolation="false"
+         stopOnFailure="false"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnSkippedTests="true">
     <testsuites>
         <testsuite name="NotificationHub Library Test Suite">
             <directory>tests/NotificationHubsRest/</directory>
         </testsuite>
     </testsuites>
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/NotificationHubsRest/</directory>
-        </whitelist>
-    </filter>
+<!--    <filter>-->
+<!--        <whitelist>-->
+<!--            <directory suffix=".php">src/NotificationHubsRest/</directory>-->
+<!--        </whitelist>-->
+<!--    </filter>-->
 </phpunit>

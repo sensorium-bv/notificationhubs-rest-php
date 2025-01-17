@@ -36,7 +36,7 @@ abstract class AbstractNotification implements NotificationInterface
      *
      * @throws \RuntimeException
      */
-    public function __construct($alert, $options = [], $tagsOrTagExpression = '', \DateTime $scheduleTime = null)
+    public function __construct($alert, $options = [], $tagsOrTagExpression = '', ?\DateTime $scheduleTime = null)
     {
         $this->alert = $alert;
         $this->options = $options;

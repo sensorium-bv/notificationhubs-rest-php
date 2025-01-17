@@ -3,8 +3,9 @@
 namespace Openpp\NotificationHubsRest\Registration\Tests;
 
 use Openpp\NotificationHubsRest\Registration\AppleRegistration;
+use PHPUnit\Framework\TestCase;
 
-class AppleRegistrationTest extends \PHPUnit_Framework_TestCase
+class AppleRegistrationTest extends TestCase
 {
     public function testRegistration()
     {
@@ -178,6 +179,8 @@ XML;
      */
     public function testNoToken()
     {
+        $this->expectException(\RuntimeException::class);
+
         $registration = new AppleRegistration();
         $payload = $registration->getPayload();
     }
